@@ -34,38 +34,7 @@ void setup()
   Serial.begin(115200); // 통신속도를 115200으로 정의함
 
 }
-long sonar_front(void) // 초음파 센서 1번 측정 함수
-{
-  long duration, distance;
-  digitalWrite(TRIG1, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(TRIG1, LOW);
-  duration = pulseIn(ECHO1, HIGH);
-  distance = ( (float) (340*duration)/1000)/2;
-  return distance;
-}
 
-long sonar2(void) // 초음파 센서 2번 측정 함수
-{
-  long duration, distance;
-  digitalWrite(TRIG2, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(TRIG2, LOW);
-  duration = pulseIn(ECHO2, HIGH);
-  distance = ( (float) (340*duration)/1000)/2;
-  return distance;
-}
-
-long sonar3(void) // 초음파 센서 3번 측정 함수
-{
-  long duration, distance;
-  digitalWrite(TRIG3, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(TRIG3, LOW);
-  duration = pulseIn(ECHO3, HIGH);
-  distance = ( (float) (340*duration)/1000)/2;
-  return distance;
-}
 void check_maze_status(void)
 {
   if( (left_sonar>= 0)&&(left_sonar <= 200)&&(front_sonar>= 0)&&(front_sonar <= 200)&&(right_sonar>= 0)&&(right_sonar <= 200)  )
@@ -98,14 +67,10 @@ void check_maze_status(void)
 }
 void loop() 
 {
-  // put your main code here, to run repeatedly:
-   
-  //Serial.print("Duratin: ");
-  //Serial.println(duration);
-
   front_sonar = sonar[Front].ping_cm()*10;    // 전방 센서 측정
   left_sonar = sonar[Left ].ping_cm()*10;     // 좌측 센서 측정
   right_sonar = sonar[Right].ping_cm()*10;    // 우측 센서 측정
+  
   if(front_sonar == 0.0) front_sonar = MAX_DISTANCE*10;    // 0.0 출력이 최대값이므로
   if(left_sonar == 0.0) left_sonar = MAX_DISTANCE*10;
   if(right_sonar == 0.0) right_sonar = MAX_DISTANCE*10;
